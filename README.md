@@ -1,10 +1,10 @@
 # Message ✦
 
-Yangi tanishuvni oddiy anketa emas, kichik interaktiv tajribaga aylantiradigan private-style questionnaire.
+Yangi tanishuvni bosimsiz, samimiy va hurmatli kichik interaktiv tajribaga aylantiradigan private-style questionnaire.
 
 ## G‘oya
 
-Sayt qizga link sifatida yuboriladi. U 13 ta turli formatdagi savolga javob beradi: variantlar, multi-select, 0–10 slider va erkin matn. Javoblar backend orqali egasining Telegram botiga yuboriladi.
+Sayt qizga link sifatida yuboriladi. Maqsad uni munosabatga undash emas, bir-birini yaxshiroq tushunish: bu do‘stlik, yaqinlik yoki shunchaki yaxshi tanishuv bo‘lib qolishi mumkin. U 13 ta turli formatdagi savolga javob beradi: variantlar, multi-select, 0–10 slider va erkin matn. Javoblar backend orqali egasining Telegram botiga yuboriladi.
 
 Dizayn: qora / warm white / champagne gold, sokin premium va biroz sirli. Yorqin romantik gradientlar yo‘q.
 
