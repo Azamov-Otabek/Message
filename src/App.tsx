@@ -125,9 +125,10 @@ export default function App() {
           <p className="kicker">BIR OZ ROSTGO‘YLIK</p>
           <h1>Bu test emas.<br /><em>Sizni tushunish uchun</em> kichik bir yo‘l.</h1>
           <p className="intro-copy">
-            Hech bir javobning “to‘g‘ri” varianti yo‘q. Men shunchaki siz qanday
-            o‘ylashingizni, nimani qadrlashingizni va meni hozir qanday
-            ko‘rishingizni bilmoqchiman.
+            Bu sevgi izhori ham, sizdan qaror so‘rash ham emas. Hech bir javobning
+            “to‘g‘ri” varianti yo‘q. Balki yaxshi do‘st bo‘larmiz, balki vaqt
+            o‘tib yaqin inson, balki shunchaki bir-birimizni yaxshi tushunib
+            qolarmiz. Men faqat sizni yaxshiroq bilmoqchiman.
           </p>
 
           <div className="intro-rule">
@@ -163,8 +164,11 @@ export default function App() {
           <p className="kicker">TAMOM ✦</p>
           <h1>Rahmat.<br />Endi navbat <em>menda.</em></h1>
           <p>
-            Javoblaringiz yetib bordi. Eng yoqqan joyi — siz hech narsani
-            “chiroyli ko‘rsatish” uchun emas, o‘zingizdek javob bergan bo‘lsangiz bo‘ldi.
+            Javoblaringiz yetib bordi. Bu javoblar hech narsani belgilab qo‘ymaydi.
+            Sizdan hozir hech qanday qaror kutmayman. Balki bu tanishuvga
+            berilgan kichkina imkoniyatdir, balki do‘stlik, balki bir kun
+            yaqin inson bo‘lib qolarmiz. Qanday bo‘lishidan qat’i nazar,
+            ko‘nglingizni og‘ritmaslik va sizga hurmat bilan munosabatda bo‘lish men uchun muhim.
           </p>
           <div className="signature">
             <span>— Otabek</span>
