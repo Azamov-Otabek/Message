@@ -36,8 +36,8 @@ export const questions: Question[] = [
   {
     id: "expectations",
     eyebrow: "02 · siz uchun muhim",
-    title: "Yigitdan eng ko‘p nimalarni kutasiz?",
-    description: "Bir nechta tanlashingiz mumkin.",
+    title: "Sizga yaqin bo‘ladigan insonda nimalar muhim?",
+    description: "Bu faqat sevgi haqida emas — do‘stlik va yaqinlikda ham siz uchun muhim bo‘lganlarini tanlang.",
     type: "multi",
     options: [
       { value: "respect", label: "Hurmat" },
@@ -111,8 +111,8 @@ export const questions: Question[] = [
   {
     id: "date_invite",
     eyebrow: "08 · eng qiziq savol",
-    title: "Agar sizni uchrashuvga taklif qilsam, kelarmidingiz?",
-    description: "Bosim yo‘q. Rost javob qiziqroq.",
+    title: "Agar bir kuni uchrashib, tinchgina gaplashishni taklif qilsam, kelarmidingiz?",
+    description: "Bu taklif ham, va’da ham emas. Shunchaki bir-birimizni yaxshiroq bilish uchun.",
     type: "single",
     options: [
       { value: "yes", label: "Ha, borardim ✦" },
@@ -135,21 +135,21 @@ export const questions: Question[] = [
   },
   {
     id: "role",
-    eyebrow: "10 · hozirgi holat",
-    title: "Meni hozir qaysi rolda ko‘ra olasiz?",
-    description: "Biror narsani va’da qilish shart emas.",
+    eyebrow: "10 · vaqt ko‘rsatadi",
+    title: "Sizningcha, bu tanishuv qayerga borishi mumkin?",
+    description: "Hech narsani hozir nomlash yoki va’da qilish shart emas.",
     type: "single",
     options: [
-      { value: "friend", label: "Yaxshi tanish / do‘st" },
-      { value: "know_more", label: "Yana yaxshiroq tanishib ko‘rish mumkin" },
-      { value: "relationship", label: "Hammasi yaxshi ketsa, munosabatga imkon bor" },
-      { value: "unknown", label: "Hali aytishga erta" }
+      { value: "friend", label: "Yaxshi do‘stlik bo‘lishi mumkin" },
+      { value: "know_more", label: "Bir-birimizni yaqindan bilib ko‘rish mumkin" },
+      { value: "close_person", label: "Vaqt o‘tib yaqin inson bo‘lib qolishimiz mumkin" },
+      { value: "unknown", label: "Hech narsaga shoshmaylik — vaqt ko‘rsatadi" }
     ]
   },
   {
     id: "important_traits",
     eyebrow: "11 · xarakter",
-    title: "Siz uchun yigitda qaysi sifatlar bo‘lmasa bo‘lmaydi?",
+    title: "Siz uchun yaqin insonda qaysi sifatlar bo‘lmasa bo‘lmaydi?",
     description: "Sizga eng yaqinlarini belgilang.",
     type: "multi",
     options: [
@@ -193,7 +193,7 @@ export const characterNotes: Record<number, { title: string; text: string }> = {
   },
   7: {
     title: "Yana bir detal",
-    text: "Munosabatda men uchun hurmat, ishonch va bir-birini himoya qila olish — nazorat qilishdan muhimroq."
+    text: "Men uchun yaqinlikning nomidan ko‘ra, hurmat va ishonch muhimroq. Hech kimni biror hisga majburlashni xohlamayman."
   },
   10: {
     title: "Va yana...",
