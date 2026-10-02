@@ -164,11 +164,13 @@ export default function App() {
           <p className="kicker">TAMOM ✦</p>
           <h1>Rahmat.<br />Endi navbat <em>menda.</em></h1>
           <p>
-            Javoblaringiz yetib bordi. Bu javoblar hech narsani belgilab qo‘ymaydi.
-            Sizdan hozir hech qanday qaror kutmayman. Balki bu tanishuvga
-            berilgan kichkina imkoniyatdir, balki do‘stlik, balki bir kun
-            yaqin inson bo‘lib qolarmiz. Qanday bo‘lishidan qat’i nazar,
-            ko‘nglingizni og‘ritmaslik va sizga hurmat bilan munosabatda bo‘lish men uchun muhim.
+            Vaqtingizni ajratib, savollarga rost javob berganingiz uchun rahmat.
+            Javoblaringiz men uchun shunchaki javob emas — sizni biroz yaxshiroq
+            tushunish uchun kichik bir qadam bo‘ldi. Bu javoblar hech narsani
+            belgilab qo‘ymaydi va sizdan hozir hech qanday qaror kutmayman.
+            Balki bu tanishuvga berilgan kichkina imkoniyatdir, balki do‘stlik,
+            balki bir kun yaqin inson bo‘lib qolarmiz. Qanday bo‘lishidan qat’i
+            nazar, sizga hurmat bilan munosabatda bo‘lish men uchun muhim.
           </p>
           <div className="signature">
             <span>— Otabek</span>
