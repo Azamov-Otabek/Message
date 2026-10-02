@@ -55,7 +55,127 @@ function formatDuration(ms: number) {
   return minutes > 0 ? `${minutes}m ${rest}s` : `${rest}s`;
 }
 
-function buildTelegramMessage(data: z.infer<typeof submissionSchema>) {
+function getAnswerMap(data: z.infer<typeof submissionSchema>) {
+  return Object.fromEntries(data.answers.map((item) => [item.id, item.answer]));
+}
+
+function buildAnswerSummary(data: z.infer<typeof submissionSchema>) {
+  const answers = getAnswerMap(data);
+  const notes: string[] = [];
+
+  const trust = typeof answers.trust_level === "number" ? answers.trust_level : null;
+  if (trust !== null) {
+    if (trust <= 3) {
+      notes.push("🫶 <b>Ishonch:</b> Hozircha ehtiyotkor. Ishonchni bosim bilan emas, vaqt va barqaror munosabat bilan qurish muhim ko‘rinadi.");
+    } else if (trust <= 6) {
+      notes.push("🫶 <b>Ishonch:</b> Boshlang‘ich ishonch bor, lekin hali bir-birini yaxshiroq tanish uchun vaqt kerak.");
+    } else {
+      notes.push("🫶 <b>Ishonch:</b> Sizga nisbatan iliq va ancha ochiq kayfiyat bor, lekin bu baribir tanishuvning hozirgi bosqichidagi taassurot.");
+    }
+  }
+
+  const trustBuilder = String(answers.trust_builder ?? "");
+  const trustText: Record<string, string> = {
+    words: "ochiq va aniq muloqot",
+    actions: "gapdan ko‘ra amalda ko‘rsatish",
+    time: "vaqt davomida bir xil, barqaror munosabat",
+    all: "gap, amal va vaqtning bir-biriga mos kelishi"
+  };
+  if (trustText[trustBuilder]) {
+    notes.push(`🤝 <b>Ishonchni nima oshiradi:</b> U uchun ${trustText[trustBuilder]} ayniqsa muhim.`);
+  }
+
+  const directness = String(answers.directness ?? "");
+  const conflict = String(answers.conflict ?? "");
+  const communicationParts: string[] = [];
+  if (directness === "like") communicationParts.push("ochiq gapni yaxshi qabul qiladi");
+  if (directness === "soft") communicationParts.push("ochiqlikni yoqtiradi, lekin ohang yumshoq bo‘lishini xohlaydi");
+  if (directness === "depends") communicationParts.push("ochiqlikda vaziyat va ohangni hisobga oladi");
+  if (directness === "hard") communicationParts.push("to‘g‘ridan-to‘g‘ri gapga darrov ochilmasligi mumkin");
+
+  if (conflict === "talk_now") communicationParts.push("kelishmovchilikni cho‘zmay gaplashib olishga moyil");
+  if (conflict === "pause") communicationParts.push("janjal paytida avval tinchlanish uchun vaqtni afzal ko‘radi");
+  if (conflict === "message") communicationParts.push("murakkab hislarni yozib tushuntirish unga osonroq bo‘lishi mumkin");
+  if (conflict === "depends") communicationParts.push("kelishmovchilik usulini vaziyatga qarab tanlaydi");
+
+  if (communicationParts.length) {
+    notes.push(`💬 <b>Muloqot:</b> ${communicationParts.join("; ")}.`);
+  }
+
+  const jealousy = String(answers.jealousy ?? "");
+  const jealousyText: Record<string, string> = {
+    little: "ozroq rashkni befarqlik emasligining belgisi deb ko‘rishi mumkin, lekin me’yor muhim",
+    trust: "ishonchni rashkdan ustun qo‘yadi",
+    boundaries: "nazoratdan ko‘ra aniq va o‘zaro kelishilgan chegaralarni muhim deb biladi",
+    depends: "rashkni qora-oq emas, vaziyat va sababga qarab baholaydi"
+  };
+  if (jealousyText[jealousy]) {
+    notes.push(`🧭 <b>Chegaralar:</b> ${jealousyText[jealousy]}.`);
+  }
+
+  const expectations = Array.isArray(answers.expectations) ? answers.expectations : [];
+  const traits = Array.isArray(answers.important_traits) ? answers.important_traits : [];
+  const values = new Set([...expectations, ...traits]);
+  const valueLabels: Record<string, string> = {
+    respect: "hurmat",
+    loyalty: "sadoqat",
+    responsible: "mas’uliyat",
+    responsibility: "mas’uliyat",
+    care: "g‘amxo‘rlik",
+    honesty: "ochiqlik",
+    freedom: "shaxsiy erkinlik",
+    protection: "xavfsizlik va tayanch",
+    fair: "adolat",
+    protective: "himoya va tayanch",
+    calm: "vazminlik",
+    ambitious: "maqsadlilik",
+    family: "oilani qadrlash",
+    loyal: "sodiqlik",
+    understanding: "tushunishga harakat qilish",
+    humor: "hazil va yengillik"
+  };
+  const topValues = [...values]
+    .map((item) => valueLabels[String(item)])
+    .filter(Boolean)
+    .slice(0, 6);
+
+  if (topValues.length) {
+    notes.push(`✨ <b>Qadriyatlari:</b> Javoblarida ${topValues.join(", ")} ko‘proq ajralib turadi.`);
+  }
+
+  const dateInvite = String(answers.date_invite ?? "");
+  const role = String(answers.role ?? "");
+  let closeness = "";
+
+  if (dateInvite === "yes") closeness = "Uchrashuv fikriga ochiq.";
+  if (dateInvite === "public_place") closeness = "Uchrashuvga qarshi emas, lekin o‘zini xotirjam va xavfsiz his qiladigan ochiq joyni afzal ko‘radi.";
+  if (dateInvite === "later") closeness = "Hozircha shoshmasdan, avval ko‘proq suhbat va tanishuvni xohlaydi.";
+  if (dateInvite === "not_ready") closeness = "Hozir uchrashuvga tayyor emas; bu joyda bosim qilmaslik eng to‘g‘ri yondashuv.";
+
+  const roleText: Record<string, string> = {
+    friend: "Hozircha do‘stlik unga eng tabiiy yo‘nalish bo‘lib ko‘rinadi.",
+    know_more: "Bir-biringizni yaqindan bilib ko‘rishga ochiq.",
+    close_person: "Vaqt o‘tishi bilan yaqinroq inson bo‘lib qolish ehtimolini inkor qilmaydi.",
+    unknown: "Hozir hech narsaga nom qo‘yishni istamaydi; vaqt ko‘rsatishini afzal ko‘radi."
+  };
+
+  if (closeness || roleText[role]) {
+    notes.push(`🌙 <b>Siz bilan yaqinlashish:</b> ${[closeness, roleText[role]].filter(Boolean).join(" ")}`);
+  }
+
+  const sayNo = String(answers.say_no ?? "");
+  if (sayNo === "yes" || sayNo === "try") {
+    notes.push("🌿 <b>Muhim signal:</b> Sizga yoqmagan narsani aytishga tayyorligi — ochiq va sog‘lom muloqot uchun yaxshi asos.");
+  } else if (sayNo === "need_trust") {
+    notes.push("🌿 <b>Muhim signal:</b> Noqulay narsalarni ochiq aytishi uchun avval ko‘proq ishonch va xotirjamlik kerak bo‘lishi mumkin.");
+  } else if (sayNo === "hard") {
+    notes.push("🌿 <b>Muhim signal:</b> Noroziligini darrov aytmasligi mumkin. Shuning uchun uning sukutini avtomatik ravishda rozilik deb qabul qilmaslik muhim.");
+  }
+
+  return notes;
+}
+
+function buildTelegramMessages(data: z.infer<typeof submissionSchema>) {
   const lines = [
     "💌 <b>MESSAGE — yangi javoblar</b>",
     "",
@@ -73,10 +193,19 @@ function buildTelegramMessage(data: z.infer<typeof submissionSchema>) {
     lines.push("");
   });
 
-  lines.push("━━━━━━━━━━━━━━━━━━");
   lines.push("✨ <i>Message loyihasi orqali yuborildi</i>");
 
-  return lines.join("\n");
+  const summary = [
+    "🧠 <b>JAVOBLARDAN CHIQQAN TAXMINIY XULOSA</b>",
+    "",
+    "<i>Bu psixologik tashxis emas. Faqat tanlangan javoblardagi tendensiyalar.</i>",
+    "",
+    ...buildAnswerSummary(data),
+    "",
+    "🤍 <b>Qisqa yondashuv:</b> Eng yaxshi yo‘l — uning javoblaridagi chegaralar va tempni hurmat qilib, hech narsani majburlamasdan tabiiy davom ettirish."
+  ];
+
+  return [lines.join("\n"), summary.join("\n")];
 }
 
 async function sendTelegram(message: string) {
@@ -123,7 +252,10 @@ app.post("/api/submit", submitLimiter, async (req, res) => {
   }
 
   try {
-    await sendTelegram(buildTelegramMessage(parsed.data));
+    const messages = buildTelegramMessages(parsed.data);
+    for (const message of messages) {
+      await sendTelegram(message);
+    }
     res.json({ ok: true });
   } catch (error) {
     console.error(error instanceof Error ? error.message : error);
