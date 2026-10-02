@@ -148,7 +148,7 @@ export default function App() {
             Boshlaymiz <ArrowRight size={18} />
           </button>
 
-          <p className="whisper">Oxirida kichkina gapim ham bor.</p>
+          <p className="whisper">Javoblaringiz menga yuboriladi · oxirida kichkina gapim ham bor.</p>
         </section>
       </main>
     );
