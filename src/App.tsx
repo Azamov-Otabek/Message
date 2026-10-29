@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight, Check, Heart, LockKeyhole, Moon, Send, Sparkles, RotateCcw, Volume2, VolumeX } from 'lucide-react';
 import { scenes, getScene, ending, type AnswerMap } from './story';
 import './story-extra.scss';
@@ -34,11 +34,18 @@ export default function App(){
  const result=ending(p.answers);
  const progress=(p.step+(selected?1:0))/scenes.length*100;
  useEffect(()=>{localStorage.setItem(key,JSON.stringify(p));document.title='Sirli inson · Bizning tasodifiy uchrashuvimiz'},[p]);
+ // Every selected decision and every scene change starts at the very top,
+ // including on mobile Safari where smooth scrolling can finish too late.
+ useLayoutEffect(()=>{
+  window.scrollTo({top:0,left:0,behavior:'instant' as ScrollBehavior});
+  document.documentElement.scrollTop=0;
+  document.body.scrollTop=0;
+ },[p.page,p.step,selected]);
  function choose(id:string){setP(x=>({...x,answers:{...x.answers,[scene.id]:id}}));if(music)clickNote()}
  function next(){
   if(!selected)return;
-  if(p.step<scenes.length-1){setP(x=>({...x,step:x.step+1}));window.scrollTo({top:0,behavior:'smooth'})}
-  else {setP(x=>({...x,page:'reveal'}));window.scrollTo({top:0,behavior:'smooth'})}
+  if(p.step<scenes.length-1){setP(x=>({...x,step:x.step+1}))}
+  else {setP(x=>({...x,page:'reveal'}))}
  }
  function restart(){
   if(!window.confirm('Hikoyani boshidan boshlaysizmi?'))return;
