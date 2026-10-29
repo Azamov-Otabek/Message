@@ -194,5 +194,10 @@ app.use((_req, res) => {
 });
 
 app.listen(port, "0.0.0.0", () => {
-  console.log(`Message server listening on port ${port}`);
+  console.log(`Sirli inson server listening on port ${port}`);
+  if (process.env.TELEGRAM_STARTUP_TEST === "1") {
+    void sendTelegram("✅ Sirli inson sayti Railway’da ishga tushdi. Bu bir martalik avtomatik test xabari, qizning javoblari emas.")
+      .then(() => console.log("Telegram startup test: delivered"))
+      .catch((error: unknown) => console.error("Telegram startup test failed:", error instanceof Error ? error.message : error));
+  }
 });
