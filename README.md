@@ -1,89 +1,73 @@
-# Message ✦
+# Sirli inson — interaktiv romantik hikoya ✦
 
-Yangi tanishuvni bosimsiz, samimiy va hurmatli kichik interaktiv tajribaga aylantiradigan private-style questionnaire.
+**7 bob, 19 tanlov, 5 xil yakun.** Tanlovlarga qarab o‘zgaradigan sahnalar, tungi shahar, yomg‘ir, sirli maktub va yakunda Otabekning ismi ochiladi.
 
-## G‘oya
+React + TypeScript + Vite + SCSS + Express + Zod + Telegram Bot API.
 
-Sayt qizga link sifatida yuboriladi. Maqsad uni munosabatga undash emas, bir-birini yaxshiroq tushunish: bu do‘stlik, yaqinlik yoki shunchaki yaxshi tanishuv bo‘lib qolishi mumkin. U 13 ta turli formatdagi savolga javob beradi: variantlar, multi-select, 0–10 slider va erkin matn. Javoblar backend orqali egasining Telegram botiga yuboriladi.
+## Xususiyatlari
 
-Dizayn: qora / warm white / champagne gold, sokin premium va biroz sirli. Yorqin romantik gradientlar yo‘q.
-
-## Stack
-
-- React + TypeScript + Vite
-- SCSS
-- Node.js + Express
-- Zod validation
-- Helmet + rate limiting
-- Telegram Bot API
-- Railway deploy
+- Qiz haqiqiy interaktiv hikoyani boshqaradi.
+- O‘yin joyini browser localStorage xotirasida saqlaydi, qayta ochganda davom ettirish mumkin.
+- iPhone va kompyuter ekranlariga moslashgan, yumshoq animatsiyalar.
+- Hikoyaning oxirida **rozilik** bilan ism, barcha 19 ta javob, natija va ixtiyoriy shaxsiy xabar botga yuboriladi.
+- Yubormasdan yakunlash ham mumkin; javoblar yashirincha Telegramga ketmaydi.
+- Token faqat serverdagi environment variables’da turadi.
+- Rate-limit, Helmet, Zod tekshiruvlari va Telegram HTML escaping.
 
 ## Lokal ishga tushirish
 
-```bash
+Node.js 20.19+ yoki 22.
+
+~~~bash
 npm install
 cp .env.example .env
 npm run dev
-```
+~~~
 
-Frontend: `http://localhost:5173`  
-Backend: `http://localhost:3001`
+Frontend: http://localhost:5173  
+Backend: http://localhost:3001/api/health
 
-Vite development vaqtida `/api` so‘rovlarini backendga proxy qiladi.
-
-## Telegram sozlash
-
-1. Telegram’da `@BotFather` orqali bot oching.
-2. Bot tokenni oling.
-3. Botga o‘zingiz bir marta xabar yozing.
-4. `TELEGRAM_BOT_TOKEN` va `TELEGRAM_CHAT_ID` qiymatlarini Railway Variables ichida saqlang.
-
-```env
-TELEGRAM_BOT_TOKEN=...
-TELEGRAM_CHAT_ID=...
-```
-
-Token hech qachon frontendga yoki GitHub repo ichiga yozilmasligi kerak.
-
-## API
-
-### GET /api/health
-
-Server va Telegram konfiguratsiyasi holatini qaytaradi.
-
-### POST /api/submit
-
-Savol-javoblarni validatsiya qiladi va Telegram’ga formatlangan xabar yuboradi.
-
-Backend IP yoki yashirin tracking ma’lumotlarini yig‘maydi.
-
-## Production
-
-Railway `railway.json` orqali:
-
-```bash
+~~~bash
+npm run typecheck
 npm run build
 npm start
-```
+~~~
 
-Healthcheck: `/api/health`
+## Render'da bepul ishga tushirish
 
-Frontend production’da Express tomonidan bir domen ichida serve qilinadi.
+Railway’da yana xarajat chiqarmaslik uchun **render.yaml** blueprinti tayyor.
 
-## Savollarni o‘zgartirish
+1. Render akkauntini GitHub bilan ulang.
+2. Repo: **Azamov-Otabek/Message**, branch: **sirli-inson**.
+3. Blueprint yoki Web Service yarating. **Free** planni tanlang.
+4. Build: npm install --no-audit --no-fund && npm run build
+5. Start: npm start
+6. Environment variablesni serverda kiriting:
 
-Barcha savollar:
+~~~env
+NODE_ENV=production
+TELEGRAM_BOT_TOKEN=BotFather orqali olgan yangi tokeningiz
+TELEGRAM_CHAT_ID=shaxsiy Telegram chat ID
+~~~
 
-```
-src/questions.ts
-```
+Botga avval /start yuboring. Tokenni GitHubga, frontend kodiga yoki suhbatga kiritmang. Oldin chatda tarqalgan tokenni BotFather yordamida yangilang.
 
-Telegramdagi ko‘rinish:
+Healthcheck: /api/health. Bu manzil telegramConfigured: true desa, muhit o‘zgaruvchilari kiritilganini bildiradi; haqiqiy yetkazish sinovi uchun o‘yinning oxirida yuborib ko‘rish kerak.
 
-```
-server/index.ts
-```
+Render Free servis 15 daqiqa faolsiz qolsa uyquga ketishi mumkin. Ilk so‘rovda qayta ishga tushishi vaqt oladi. Free limitlardan oshganda karta bog‘langan hisoblar pullanishi mumkin; limitlarni nazorat qiling.
 
-## Muallif
+Railway deploy fayli qolgan, biroq to‘lovni qayta boshlamaslik uchun servislarni avtomatik yoqmang.
 
-Otabek Azamov
+## Loyihaning muhim fayllari
+
+- src/story.ts — boblar va variantlar.
+- src/App.tsx — o‘yinning interfeysi, progress, rozilik va yakun.
+- src/story-extra.scss — dizayn va mobillik.
+- server/index.ts — Telegramga yuboruvchi Express API.
+- render.yaml — bepul deploy rejasi.
+
+## Maxfiylik
+
+Javoblar faqat oxirida odam ongli ravishda rozilik berganidan keyin yuboriladi. Yuborishni rad qilish mumkin. Natijalar psixologik tashxis emas.
+
+© 2026 Otabek
