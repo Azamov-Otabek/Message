@@ -66,21 +66,21 @@ function buildAnswerSummary(data: z.infer<typeof submissionSchema>): string[] {
  const answers = getAnswerMap(data);
  const a = (id: string) => String(answers[id] || "");
  const mapping: Record<string,Record<string,string>> = {
-  place: {cafe:"Shinam kafe",walk:"Kechki sayr",music:"Jonli musiqa",garden:"Sokin bog‘"},
-  values: {trust:"Ishonch",honesty:"Rostgo‘ylik",respect:"Hurmat",joy:"Bir-birini quvontirish"},
-  boundaries: {slow:"Shoshilmasdan tanishish",friend:"Avval do‘stlik",open:"Ochiq suhbat",unknown:"Hozircha noma’lum"},
-  final: {continue:"Yana suhbatlashish mumkin",friends:"Do‘stlik",slow:"Shoshmaslik",unknown:"Noma’lum qolsin"}
+  place: {cafe:"Kofe ichib gaplashish",walk:"Shaharda aylanish",music:"Musiqali joy",garden:"Parkda sayr"},
+  values: {trust:"Ishonsa bo‘ladigan odam",honesty:"Yuziga rost gapirish",respect:"Hurmat",joy:"Birga zerikmaslik"},
+  boundaries: {slow:"Shoshilmasdan tanishish",friend:"Avval do‘st bo‘lish",open:"Gaplashib ko‘rish",unknown:"Hali aniq emas"},
+  final: {continue:"Yana gaplashishga rozi",friends:"Do‘st sifatida gaplashish",slow:"Shoshmaslik",unknown:"Hozircha aniq javob yo‘q"}
  };
  const lines = [
-  "<b>🎬 Hikoyadagi tanlovlar qisqacha:</b>",
-  "🌆 <b>Uchrashuv manzarasi:</b> "+escapeHtml(mapping.place[a("place")] || "—"),
+  "<b>🎬 O‘yindagi javoblar qisqacha:</b>",
+  "🌆 <b>Uchrashuv joyi:</b> "+escapeHtml(mapping.place[a("place")] || "—"),
   "🤝 <b>Muhim qadriyat:</b> "+escapeHtml(mapping.values[a("values")] || "—"),
   "🌿 <b>Shaxsiy chegaralar:</b> "+escapeHtml(mapping.boundaries[a("boundaries")] || "—"),
   "❤️ <b>Hikoya davomiga munosabati:</b> "+escapeHtml(mapping.final[a("final")] || "—")
  ];
  if (a("visitor_message")) lines.push("✉️ <b>Qoldirgan xabari:</b> "+escapeHtml(a("visitor_message")));
- if (a("ending")) lines.push("✨ <b>Badiiy yakun:</b> "+escapeHtml(a("ending")));
- lines.push("📝 <i>Bu faqat interaktiv o‘yindagi tanlovlar jamlanmasidir. Insonning haqiqiy hislarini, xarakterini yoki niyatlarini isbotlamaydi.</i>");
+ if (a("ending")) lines.push("✨ <b>O‘yin yakuni:</b> "+escapeHtml(a("ending")));
+ lines.push("📝 <i>Bular o‘yinda tanlangan javoblar, real his-tuyg‘ularni aniq bildirmaydi.</i>");
  return lines;
 }
 
@@ -195,9 +195,4 @@ app.use((_req, res) => {
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`Sirli inson server listening on port ${port}`);
-  if (process.env.TELEGRAM_STARTUP_TEST === "1") {
-    void sendTelegram("✅ Sirli inson sayti Railway’da ishga tushdi. Bu bir martalik avtomatik test xabari, qizning javoblari emas.")
-      .then(() => console.log("Telegram startup test: delivered"))
-      .catch((error: unknown) => console.error("Telegram startup test failed:", error instanceof Error ? error.message : error));
-  }
 });
