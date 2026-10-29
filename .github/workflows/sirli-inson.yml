@@ -1,0 +1,20 @@
+name: Sirli Inson quality checks
+on:
+  push:
+    branches: [sirli-inson]
+  pull_request:
+    branches: [sirli-inson]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Typecheck client and server
+        run: npm run typecheck
+      - name: Build site and API
+        run: npm run build
