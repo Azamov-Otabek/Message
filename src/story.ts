@@ -1,89 +1,126 @@
 export type Mood = 'night' | 'cafe' | 'rain' | 'garden' | 'sky' | 'letter';
-export type Choice = { id: string; label: string; reply: string };
-export type Scene = { id:string; chapter:number; chapterName:string; title:string; description:string; dialogue:string; question:string; mood:Mood; choices:Choice[] };
+export type Choice = { id:string; label:string; reply:string };
+export type Scene = {id:string; chapter:number; chapterName:string; title:string; description:string; dialogue:string; question:string; mood:Mood; choices:Choice[]};
 export type AnswerMap = Record<string,string>;
 const c=(id:string,label:string,reply:string):Choice=>({id,label,reply});
-
 export const scenes:Scene[]=[
-{ id:'invitation',chapter:1,chapterName:'Tasodif',title:'Bir xabar. Ming xil ehtimol.',mood:'night',
- description:'Oddiy oqshom. Telefoningiz ekranida kutilmagan xabar yonadi. Bu haqiqiy uchrashuv emas, siz tanlovlar orqali boshqaradigan badiiy hikoya.',
- dialogue:'«Salom. Bugun shahar chiroyli ko‘rinyapti. Birgalikda kichkina sarguzashtni tasavvur qilamizmi?»',
- question:'Bu xabarga qanday javob yozardingiz?',
- choices:[c('funny','«Kim ekan bu sirli inson? 😂»','«To‘g‘ri savol! Hikoyamiz davomida bilib olasiz.»'),c('know','«Avval biroz tanishib olaylik.»','«Albatta. Shoshilishga hojat yo‘q.»'),c('where','«Qayerga boramiz? 👀»','«Buni siz tanlaysiz!»'),c('later','«Hozir emas, balki keyinroq.»','«Hamma narsaning o‘z vaqti bor.»')]},
-{ id:'message',chapter:1,chapterName:'Tasodif',title:'Ilk suhbat',mood:'night',
- description:'Telefon ekranidagi suhbat davom etadi. Sirli inson sizni yaxshiroq bilish uchun birinchi savolni berish huquqini sizga qoldiradi.',
- dialogue:'«Faqat bitta savol berish imkoningiz bo‘lsa, nimani so‘rardingiz?»',question:'Qaysi savolni tanlaysiz?',
- choices:[c('intent','«Nega aynan men bilan gaplashmoqchisiz?»','«Siz bilan suhbat qiziq tuyuldi.»'),c('joke','«O‘zingiz haqingizda kulgili fakt ayting.»','«Bir kuni juda jiddiy turmoqchi bo‘lib o‘zim kulib yuborganman.»'),c('dream','«Eng katta orzuingiz nima?»','«Yaxshi insonlar bilan chiroyli xotiralar yaratish.»'),c('you','«Avval siz gapiring.»','«Menga samimiylik yoqadi. Sizchi?»')]},
-{ id:'place',chapter:2,chapterName:'Ilk manzara',title:'Manzilni siz tanlaysiz',mood:'night',
- description:'Tasavvuriy hikoyamizning birinchi manzarasi sizning didingizga qarab o‘zgaradi.',dialogue:'«Qayerda gaplashsak o‘zimizni erkinroq his qilardik?»',question:'Birinchi suhbat uchun qaysi joy?',
- choices:[c('cafe','☕ Deraza yonidagi shinam kafe','Kofe hidi va sokin suhbat.'),c('walk','🌃 Kechki shahar bo‘ylab sayr','Chiroqlar va shoshmasdan tashlangan qadamlar.'),c('music','🎹 Jonli musiqa ostidagi oqshom','Pianinoning mayin notalari yangraydi.'),c('garden','🌿 Sokin bog‘dagi sayr','Shamol va yaproqlarning mayin shiviri.')]},
-{ id:'hello',chapter:2,chapterName:'Ilk manzara',title:'Nihoyat, ikki qahramon',mood:'cafe',
- description:'Siz tanlagan manzarada ikki qahramon uchrashadi. Sirli inson sizni samimiy qarshi oladi.',dialogue:'«Eng yaxshi uchrashuv — o‘zingizni qulay his qiladigan joyda bo‘ladigan uchrashuv.»',question:'Birinchi daqiqada nimaga e’tibor berasiz?',
- choices:[c('eyes','👀 Nigohi va samimiyligiga','«Ko‘zlar ham gapiradi, shundaymi?»'),c('humor','😄 Hazilkashligiga','«Unda bugun juda jiddiy bo‘lmaslikka harakat qilaman.»'),c('respect','🤝 Muomalasi va hurmatiga','«Bir-birimizni tinglashdan boshlaymiz.»'),c('calm','🌙 Yonida qanchalik xotirjamligimga','«O‘zingizni erkin his qilishingiz muhim.»')]},
-{ id:'icebreaker',chapter:2,chapterName:'Ilk manzara',title:'Bitta savol hammasini o‘zgartiradi',mood:'cafe',
- description:'Suhbat qizg‘in tus oladi. Sirli inson sizning tanlovingizga ko‘ra mavzuni ochadi.',dialogue:'«Bugun biror narsadan tortinmang. Savolni siz tanlang.»',question:'Qaysi mavzuda suhbatlashasiz?',
- choices:[c('childhood','📖 Bolalikdagi eng yaxshi xotira','«Bolalik odamni boshqa ko‘z bilan tanitadi.»'),c('travel','✈️ Orzu qilgan sayohat','«Yangi shahar, yangi xotiralar...»'),c('funny','😂 Eng kulgili voqea','«Mayli, lekin ustimdan kulmaysiz-a?»'),c('values','💫 Hayotdagi qadriyatlar','«Va’daga sodiq qolish men uchun muhim.»')]},
-{ id:'smalltalk',chapter:3,chapterName:'Kutilmagan oqshom',title:'Mayda baxtlar siri',mood:'cafe',
- description:'Suhbat o‘rtasida sirli inson kutilmagan kichkina savol beradi.',dialogue:'«Oddiy kundan ham bayram yasaydigan narsa nima?»',question:'Sizni nima ko‘proq quvontiradi?',
- choices:[c('flowers','🌸 Kutilmagan gullar','«Kichik e’tibor ham baxt beradi.»'),c('jokes','😆 Kuldiradigan xabar','«Demak, hazilni yo‘qotmaymiz.»'),c('time','☕ Vaqt ajratib suhbatlashish','«Vaqt — qimmatli sovg‘a.»'),c('peace','🌿 Xotirjam vaqt','«Sokinlik ham go‘zal.»')]},
-{ id:'challenge',chapter:3,chapterName:'Kutilmagan oqshom',title:'Kutilmagan shart',mood:'cafe',
- description:'Sirli inson kulib, kichik o‘yin taklif qiladi.',dialogue:'«Kim birinchi kulib yuborsa, ikkinchisining savoliga javob beradi. Kelishdikmi?»',question:'Nima deysiz?',
- choices:[c('deal','😂 «Kelishdik, lekin men yutaman!»','«Unda men mag‘lubiyatga tayyorman.»'),c('trap','👀 «Bu qanday tuzoq?»','«Faqat tabassum tuzog‘i!»'),c('quiet','🌙 «Shunchaki suhbatlashaylik.»','«Siz qanday xohlasangiz shunday.»'),c('reverse','✨ «Birinchi savol meniki.»','«Mikrofon sizda!»')]},
-{ id:'rain',chapter:3,chapterName:'Kutilmagan oqshom',title:'Birdan yomg‘ir yog‘di',mood:'rain',
- description:'Shaharning iliq chiroqlari yomg‘ir tomchilarida yaltiraydi. Qo‘lda esa bittagina soyabon.',dialogue:'«Rejissyor hikoyamizga yomg‘ir qo‘shib yuboribdi.»',question:'Qaysi sahnani tanlaysiz?',
- choices:[c('umbrella','☂️ Soyabon ostida sekin yurish','Ikki qahramon bir soyabon ostida yuradi.'),c('run','🏃 Yomg‘irdan qochib yugurish','Ikkalasi ham kulib yuguradi.'),c('wait','☕ Ichkarida kutish','Derazaga urilgan tomchilar musiqa bo‘ladi.'),c('taxi','🚕 Qulay joyga ketish','Qulaylik ham chiroyli qaror.')]},
-{ id:'oops',chapter:3,chapterName:'Kutilmagan oqshom',title:'Va birdan... 😂',mood:'rain',
- description:'Sirli inson bexosdan ko‘lmakka oyoq bosadi! Hech kim jarohatlanmaydi, ammo kulgini to‘xtatish qiyin.',dialogue:'«Aftidan, bu oqshomning eng qahramonona sahnasi bo‘ldi.»',question:'Qanday javob berardingiz?',
- choices:[c('laugh','😂 «Qaytadan takrorlaysizmi?»','«Faqat boshqa tufli bilan!»'),c('help','🤍 «Hammasi joyidami?»','«Rahmat, hammasi yaxshi.»'),c('warn','😏 «Aytdim-ku, ehtiyot bo‘ling deb!»','«Endi maslahatni tinglayman.»'),c('both','🤣 «Kulganimdan o‘zim ham yiqilaman!»','Ikki qahramon birga kuladi.')]},
-{ id:'memory',chapter:4,chapterName:'Chin suhbat',title:'Esda qoladigan lahza',mood:'night',
- description:'Yomg‘ir asta-sekin to‘xtaydi. Oqshom esa davom etadi.',dialogue:'«Shu oqshomdan bitta xotira qoldirsak, qaysi bo‘lsin?»',question:'Siz nima deb javob berasiz?',
- choices:[c('talk','💬 Samimiy suhbat','«Suhbatlar odamlarni yaqinlashtiradi.»'),c('laugh','😄 Birga kulganimiz','«Demak, yomg‘ir behuda yog‘mabdi!»'),c('view','🌆 Shahar manzarasi','«Chiroyli manzaralar unutilmaydi.»'),c('freedom','🌿 O‘zimni erkin his qilganim','«Bundan ortiq nima kerak?»')]},
-{ id:'silence',chapter:4,chapterName:'Chin suhbat',title:'Sukut ham suhbatdir',mood:'sky',
- description:'Bir necha soniya jimlik. Lekin bu noqulay sukut emas.',dialogue:'«Ba’zan birga jim o‘tirish ham yaxshi, to‘g‘rimi?»',question:'Siz qanday o‘ylaysiz?',
- choices:[c('comfort','🌙 Yaqin odam bilan sukut yoqimli','«Ba’zi lahzalar so‘zsiz ham tushunarli.»'),c('talk','💬 Suhbatni davom ettiraman','«Unda savol sizdan!»'),c('joke','😂 Sukutni hazil bilan buzaman','«Buni kutgandim!»'),c('depends','🍃 Kayfiyatimga bog‘liq','«Bu ham tabiiy.»')]},
-{ id:'skyline',chapter:4,chapterName:'Chin suhbat',title:'Shahar chiroqlari ortidagi orzular',mood:'sky',
- description:'Siz manzaraga qarab turibsiz, suhbat biroz chuqurlashadi.',dialogue:'«Kelajakdan eng ko‘p nimani kutasiz?»',question:'Qaysi javob sizga yaqin?',
- choices:[c('peace','🕊️ Baxtli va xotirjam kunlar','«Xotirjamlik bebaho.»'),c('growth','🚀 Katta yutuqlar','«Orzular uchun harakat qilamiz.»'),c('family','❤️ Yaqinlarim bilan yaxshi lahzalar','«Eng qimmat xotiralar odamlar bilan.»'),c('freedom','🌍 Erkinlik va sarguzashtlar','«Yangi kun — yangi sahifa.»')]},
-{ id:'values',chapter:5,chapterName:'Qarorlar',title:'Eng muhim qadriyat',mood:'sky',
- description:'Hikoya endi ikki inson o‘rtasidagi ishonch haqida.',dialogue:'«Har qanday yaqin munosabatda siz uchun nima eng muhim?»',question:'Bittasini tanlash kerak bo‘lsa...',
- choices:[c('trust','🤝 Ishonch','«Ishonchning o‘rni bo‘lakcha.»'),c('honesty','✨ Rostgo‘ylik','«Rost gap har doim qadrlidir.»'),c('respect','🌿 O‘zaro hurmat','«Hurmatdan boshlaymiz.»'),c('joy','☀️ Bir-birini quvontirish','«Tabassum ham muhim.»')]},
-{ id:'busy',chapter:5,chapterName:'Qarorlar',title:'Vaqt kam bo‘lib qolsa...',mood:'garden',
- description:'Tasavvur qiling: sizga yaqin inson ish bilan band va bir necha kundir kamroq vaqt ajratmoqda.',dialogue:'«Bunday paytda bir-birimizni qanday tushunsak bo‘ladi?»',question:'Siz nima qilardingiz?',
- choices:[c('talk','💬 E’tibor kerakligini ochiq aytaman','«Ochiq suhbat aniqroq bo‘ladi.»'),c('understand','🫶 Vaziyatini tushunishga urinaman','«Tushunish ham e’tibor.»'),c('balance','⚖️ Birgalikda vaqt topamiz','«Yechimni birga izlaymiz.»'),c('space','🌿 Biroz masofa saqlayman','«O‘zingizga vaqt ajrating.»')]},
-{ id:'conflict',chapter:5,chapterName:'Qarorlar',title:'Ikki xil fikr',mood:'garden',
- description:'Ikki qahramon bir masalada turlicha o‘ylab qoldi. Hech kim baqirmaydi.',dialogue:'«Bunday paytda qanday yo‘l tutgan yaxshi?»',question:'Qaysi yondashuvni tanlaysiz?',
- choices:[c('talk','🗣️ Shu zahoti tinchgina gaplashish','«Bir-birimizni eshitamiz.»'),c('pause','🌙 Keyinroq suhbatlashish','«Vaqt ham yordam beradi.»'),c('write','✉️ Avval yozib tushuntirish','«Ba’zan yozilgan fikr ravshanroq.»'),c('accept','🤝 Turli fikrni hurmat qilish','«Bir xil fikrda bo‘lish shart emas.»')]},
-{ id:'boundaries',chapter:5,chapterName:'Qarorlar',title:'Shoshilmaslik ham tanlov',mood:'garden',
- description:'Sirli inson sizni yaxshiroq tanimoqchi, ammo sizga vaqt kerak. U shoshirmaydi.',dialogue:'«Qanday davom etishni o‘zingiz tanlang.»',question:'Qaysi fikr sizga yaqin?',
- choices:[c('slow','🌿 Shoshilmay tanishish','«Hammasining o‘z vaqti bor.»'),c('friend','🤝 Avval do‘stlik','«Do‘stlik ham chiroyli.»'),c('open','💫 Ochiq suhbatlashish','«Sizni tinglashni xohlayman.»'),c('unknown','🌙 Hozircha noma’lum','«Tanlovingizni hurmat qilaman.»')]},
-{ id:'gift',chapter:6,chapterName:'Sirli maktub',title:'Stol ustida konvert',mood:'letter',
- description:'Oqshom yakunlanmoqda. Sirli inson sovg‘a emas, maktub uzatadi.',dialogue:'«Xohlasangiz o‘qing. Javob berishga majbur emassiz.»',question:'Nima qilardingiz?',
- choices:[c('now','💌 Shu yerda o‘qiyman','Konvert mayin shivirlab ochiladi.'),c('later','🌙 Keyinroq o‘qiyman','Maktub siz bilan qoladi.'),c('ask','👀 «Ichida nima yozilgan?»','«Faqat samimiy niyat.»'),c('decline','🍃 «Hozircha olmasam bo‘ladimi?»','«Albatta, muammo yo‘q.»')]},
-{ id:'letter',chapter:6,chapterName:'Sirli maktub',title:'Maktubdagi satrlar',mood:'letter',
- description:'Xatdagi samimiy so‘zlar shoshilish yoki va’da talab qilmaydi.',dialogue:'«Men kelajak qanday bo‘lishini bilmayman. Balki do‘st, balki yaxshi suhbatdosh bo‘larmiz. Muhimi, bir-birimizni hurmat qilish.»',
- question:'Bu satrlardan keyin qanday tuyg‘u qoladi?',
- choices:[c('peace','🤍 Xotirjamlik','«Demak, hikoya o‘z vazifasini bajardi.»'),c('smile','😊 Iliq tabassum','«Tabassumning o‘zi ham baxt.»'),c('intrigue','👀 Davomini bilgim keldi','«Unda so‘nggi sahifaga o‘tamiz.»'),c('neutral','🌿 Oddiy yaxshi taassurot','«Oddiy yaxshilik ham qadrlidir.»')]},
-{ id:'final',chapter:7,chapterName:'Davomi',title:'Oxirgi sahifani siz yozasiz',mood:'sky',
- description:'Oqshom tugayapti. Bu hikoyaning davomini haqiqiy hayotda davom ettirish shart emas.',dialogue:'«Bir-birimizni yaxshiroq tanishish haqidagi fikrga qanday qaraysiz?»',question:'Hikoyaga qanday yakun tanlaysiz?',
- choices:[c('continue','❤️ Yana suhbatlashib ko‘rish mumkin','«Yangi sahifa ochiq qoladi.»'),c('friends','🤝 Do‘st bo‘lib qolish mumkin','«Do‘stlik ham qadrli.»'),c('slow','🌙 Shoshmaylik, vaqt ko‘rsatadi','«Albatta, shoshmaymiz.»'),c('unknown','✨ Hozircha noma’lum qolsin','«Bu ham chiroyli tanlov.»')]}
+{id:'invitation',chapter:1,chapterName:'Noma’lumdan xabar',title:'Kim bu o‘zi? 👀',mood:'night',
+description:'Kechqurun telefonda o‘tiribsan. Birdan notanish akkauntdan xabar keldi. Kimligini bilmaysan. Bu o‘yin, haqiqiy uchrashuvga rozilik degani emas.',
+dialogue:'«Salom 😂 Bir o‘yin bor. 10 daqiqa vaqtin bo‘lsa, zo‘r narsa ko‘rsataman. Zerikmaysan, va’da!»',
+question:'Nima deb javob berasan?',
+choices:[c('funny','😂 «Avval kimligingni ayt-chi?»','«Ha, savol joyida. Hozircha sir bo‘lib turay 😅»'),c('know','«Nima o‘yin ekan, tushuntir.»','«O‘zing boshqaradigan bir hikoya. Ko‘rasan.»'),c('where','👀 «10 daqiqada nima bo‘larkan?»','«Hali boshida turibmiz-ku. Davom et!»'),c('later','«Hozir uncha vaqtim yo‘q.»','«Mayli, xohlagan payting davom ettirasan.»')]},
+{id:'message',chapter:1,chapterName:'Noma’lumdan xabar',title:'Gapni qayerdan boshlaymiz?',mood:'night',
+description:'Notanish odam birinchi bo‘lib yozdi. Endi navbat senda. Oddiy chatdagidek gap ketayapti.',
+dialogue:'«Mayli, birinchi savol senda. Istagan narsangni so‘ra, faqat kartamning kodini emas 😂»',
+question:'Nima so‘raysan?',
+choices:[c('intent','«Menga nega yozding o‘zi?»','«Chunki sen bilan gaplashish qiziq bo‘lishi mumkin deb o‘yladim.»'),c('joke','😂 «O‘zing haqingda kulgili fakt ayt.»','«Bir marta to‘g‘ri manzilga borib ham adashganman 😭»'),c('dream','«Hayotdagi maqsading nima?»','«O‘zim yoqtirgan ishni qilib, bemalol yashash.»'),c('you','«Avval o‘zingni tanishtir.»','«Tinchroq odamman. Lekin hazil boshlansa, to‘xtatish qiyin 😅»')]},
+{id:'place',chapter:2,chapterName:'Qayerga boramiz?',title:'Joyni sen tanla',mood:'night',
+description:'Tasavvur qil: ikkoving ilk marta ko‘rishmoqchisanlar. Ochiq, odamlar bor joyda, bemalol gaplashadigan uchrashuv.',
+dialogue:'«Qara, joyni o‘zing tanla. Men “qayerga desang o‘sha” deyadigan odamman 😁»',
+question:'Birinchi uchrashuvga qayer yaxshi?',
+choices:[c('cafe','☕ Kafe, kofe ichib gaplashamiz','«Zo‘r. Faqat menyuni 20 daqiqa tanlab o‘tirmaylik 😂»'),c('walk','🚶 Shaharda aylanamiz','«Gap bo‘lishi aniq. Qadam sanab ketmasak bo‘ldi.»'),c('music','🎵 Musiqa bor joyga boramiz','«Bo‘ldi, playlistni sen tanla.»'),c('garden','🌳 Parkda yursak bo‘ladi','«Toza havo, yaxshi gap — yetadi.»')]},
+{id:'hello',chapter:2,chapterName:'Qayerga boramiz?',title:'Birinchi 5 daqiqa',mood:'cafe',
+description:'Uchrashdinglar. Boshida ozgina tortinish bor, keyin gap sekin ochilyapti.',
+dialogue:'«Nihoyat ko‘rishdik. Nima, tasavvuringdagidekmanmi yoki rasmdagidan boshqachamanmi? 😂»',
+question:'Birinchi nimaga qaraysan?',
+choices:[c('eyes','👀 Ko‘ziga, o‘zini tutishiga','«Qattiq tikilib ketma, hayajon bosadi 😁»'),c('humor','😄 Hazili bormi, yo‘qmi','«Bo‘ldi, unda bugun zerikish yo‘q.»'),c('respect','🤝 Muomalasi qandayligiga','«Gap to‘g‘ri. Hurmat birinchi o‘rinda.»'),c('calm','😌 Yonida o‘zimni qanday his qilishimga','«O‘zingni bemalol tut. Rol o‘ynash shartmas.»')]},
+{id:'icebreaker',chapter:2,chapterName:'Qayerga boramiz?',title:'Gap tugab qolsa-chi?',mood:'cafe',
+description:'Bir zum jimlik bo‘ldi. Sirli yigit telefonini chetga qo‘yib, gap boshladi.',
+dialogue:'«Intervyuga kelmaganmiz-ku 😅 Qaysi mavzuda gaplashamiz?»',
+question:'Senga qaysi suhbat yoqadi?',
+choices:[c('childhood','😂 Bolalikdagi sharmandali voqealar','«Bu mavzuda menda material ko‘p, aytib qo‘yay.»'),c('travel','✈️ Borishni orzu qilgan joylar','«Mayli, bittamiz yo‘lni bilib yursa bo‘ldi 😂»'),c('funny','🤣 Memlar, prikollar, kulgili gaplar','«Bo‘ldi, jiddiy bo‘lish bugunga bekor.»'),c('values','💬 Odamlar, hayot, munosabatlar','«Unda rost gaplashamiz, bezaksiz.»')]},
+{id:'smalltalk',chapter:3,chapterName:'Kutilmagan voqea',title:'Kichkina e’tibor',mood:'cafe',
+description:'Ofitsiant kelib, «Yana nimadir olasizlarmi?» deb so‘radi. Yigit senga qaradi.',
+dialogue:'«Qara, yaxshi kayfiyat uchun senga nima olib bersam bo‘ladi?»',
+question:'Qaysi variant yoqadi?',
+choices:[c('flowers','🌷 Guldasta bo‘lsa yomonmas','«Mayli, faqat gulni sendan katta qilib yubormayman 😂»'),c('jokes','😂 Hech narsa kerakmas, kuldirsang bo‘ldi','«Oson deyapsan-u, endi bosim menda 😄»'),c('time','☕ Shunchaki o‘tirib gaplashamiz','«Mana shu eng zo‘ri aslida.»'),c('peace','🍰 Biror shirinlik olib ber','«Desertga qarshi odam topilmasa kerak.»')]},
+{id:'challenge',chapter:3,chapterName:'Kutilmagan voqea',title:'Keling, bitta o‘yin!',mood:'cafe',
+description:'Gap qiziq ketayotganda yigit kulib yubordi. Keyin bitta taklif berdi.',
+dialogue:'«3 ta fakt aytaman. Bittasi yolg‘on. Topolmasang, keyingi savolga javob berasan. O‘ynaymizmi?»',
+question:'Nima deysan?',
+choices:[c('deal','🔥 «O‘ynaymiz, yutqazmaysanmi?»','«Shuncha ishonch qayerdan? 😂»'),c('trap','🤨 «O‘zi qanday o‘yin bu?»','«Oddiy, faqat yutqazib qo‘ymasang bo‘ldi.»'),c('quiet','😌 «O‘yin shartmas, gaplashamiz.»','«Mayli. Suhbatning o‘zi yaxshi ketayapti.»'),c('reverse','😏 «Birinchi men savol beraman.»','«Vay, o‘yin endi boshlandi!»')]},
+{id:'rain',chapter:3,chapterName:'Kutilmagan voqea',title:'E, yomg‘ir boshlangan-ku! ☔',mood:'rain',
+description:'Tashqariga chiqsanglar, yomg‘ir yog‘ayapti. Rejada bunday gap yo‘q edi.',
+dialogue:'«Ob-havoni tekshirmaganim aniq bo‘ldi 😂 Endi nima qilamiz?»',
+question:'Sen nima taklif qilasan?',
+choices:[c('umbrella','☂️ Soyabon bo‘lsa, aylanamiz','«Bitta soyabon topildi. Yomg‘irdan qo‘rqmas ekanmiz.»'),c('run','🏃 «Yuguramiz, kim oxirgi — yutqazdi!»','«Mayli, lekin sekinroq, tufli yangi 😭»'),c('wait','☕ Biror joyga kirib kutamiz','«To‘g‘ri, shamollab qolish shartmas.»'),c('taxi','🚕 Taksi chaqiramiz','«Zo‘r, qulaylik ham kerak.»')]},
+{id:'oops',chapter:3,chapterName:'Kutilmagan voqea',title:'Yomg‘irning prikali 😂',mood:'rain',
+description:'Sirli yigit kichkina ko‘lmakni ko‘rmay qoldi. Krossovkasi shalop etib suvga botdi. O‘zi ham kulib yubordi.',
+dialogue:'«Ajoyib. Hozir bir oy shu voqeani eslatib yurasan, a? 😑😂»',
+question:'Nima deb javob berasan?',
+choices:[c('laugh','🤣 «Videoga olishim kerak ekan!»','«Yaxshiyam olmabsan, meme bo‘lib ketardim.»'),c('help','🤍 «Bo‘ldi, hech narsa qilmadi, yuraqol.»','«Rahmat, vaziyatdan qutqarding.»'),c('warn','😏 «Ehtiyot bo‘l dedim-ku!»','«Mayli, mayli, tan oldim 😂»'),c('both','😂 «Men bo‘lsam battar yiqilardim!»','«Unda ikkovimizga ham quruq yo‘l kerak.»')]},
+{id:'memory',chapter:4,chapterName:'Bir-birimizni bilamiz',title:'Bugundan nimasi esda qoladi?',mood:'night',
+description:'Yomg‘ir sekin to‘xtadi. Qarasang, o‘zing ham bilmay vaqt o‘tib ketibdi.',
+dialogue:'«Bugun yomon o‘tmadi, to‘g‘rimi? Bir narsani eslab qolsang, nima bo‘lardi?»',
+question:'Nimani tanlaysan?',
+choices:[c('talk','💬 Rostdan gaplashganimizni','«Menga ham yolg‘on gaplarsiz suhbat yoqadi.»'),c('laugh','😂 Ko‘lmakdagi voqeani, albatta','«E, shu voqeani umrbod eslatasan shekilli 😭»'),c('view','📸 Birga tushgan rasmimizni','«Yaxshi chiqsin faqat, 50 ta dubldan keyin 😂»'),c('freedom','😌 O‘zimni erkin his qilganimni','«Mana shunaqa bo‘lsa, zo‘r.»')]},
+{id:'silence',chapter:4,chapterName:'Bir-birimizni bilamiz',title:'Telefon jiringlasa...',mood:'sky',
+description:'Gaplashib o‘tirgan paytda uning telefoni jiringladi. U qaradi-yu, ovozini o‘chirdi.',
+dialogue:'«Hozir gaplashyapmiz-ku. Keyin o‘zim qo‘ng‘iroq qilaman.»',
+question:'Bunaqa vaziyatda nima deb o‘ylaysan?',
+choices:[c('comfort','😊 «E’tibor berayotgani yaxshi ekan.»','«Gaplashayotgan odamni tinglashga harakat qilaman.»'),c('talk','📱 «Muhim bo‘lsa javob beraver.»','«Rahmat. Shoshilinchmas ekan.»'),c('joke','😂 «Kim ekan, meni rashk qildirma?»','«Telefon kompaniyasidan bo‘lsa-chi? 😂»'),c('depends','🤷 «Kim qo‘ng‘iroq qilganiga bog‘liq.»','«To‘g‘ri, vaziyatga qaraladi.»')]},
+{id:'skyline',chapter:4,chapterName:'Bir-birimizni bilamiz',title:'Bir kun bo‘sh bo‘lsa...',mood:'sky',
+description:'Suhbat kelajakdagi rejalar haqida ketdi. Juda katta gaplar emas, oddiy hayot.',
+dialogue:'«Bir kun hech qanday ish bo‘lmasa, nima qilarding?»',
+question:'Qaysi reja sendan chiqadi?',
+choices:[c('peace','😴 Rosa mazza qilib dam olaman','«Ha, ba’zida hech narsa qilmaslik ham reja.»'),c('growth','💻 Biror yangi narsa o‘rganaman','«Vaqtni zo‘r ishlatarkan-san.»'),c('family','❤️ Yaqinlarim bilan bo‘laman','«Oila uchun vaqt topish zo‘r.»'),c('freedom','🚗 Biror joyga ketib qolaman','«Shunchaki mashinaga o‘tirib ketish ham yoqadi.»')]},
+{id:'values',chapter:5,chapterName:'Rost gap',title:'Munosabatda nima muhim?',mood:'sky',
+description:'Endi biroz jiddiy savol. Lekin intervyu emas — shunchaki fikrlar.',
+dialogue:'«Qara, senga yoqadigan odamda bitta narsa bo‘lishi shart bo‘lsa, nima bo‘lardi?»',
+question:'Bittasini tanla:',
+choices:[c('trust','🤝 Ishonsa bo‘ladigan odam bo‘lsin','«Ishonch bo‘lmasa, qiyin.»'),c('honesty','💬 Orqamdan emas, yuzimga gapirsin','«Rost gap ba’zan yoqmasa ham yaxshi.»'),c('respect','🫶 Hurmat qilishni bilsin','«Hurmat bo‘lsa, gaplashib olamiz.»'),c('joy','😂 Yonida zerikib qolmay','«Kulgi ham kerak-da.»')]},
+{id:'busy',chapter:5,chapterName:'Rost gap',title:'Kech javob bersa-chi?',mood:'garden',
+description:'Tasavvur qil: kecha zo‘r gaplashdinglar. Bugun esa u ish bilan band bo‘lib, ancha kech yozdi.',
+dialogue:'«Uzr, ishlar chiqib qoldi. Endi bo‘shadim.»',
+question:'Sening javobing qanday bo‘lardi?',
+choices:[c('talk','💬 «Band bo‘lsang, aytib qo‘ysang bo‘lardi.»','«Ha, oldindan aytishim kerak edi.»'),c('understand','🙂 «Mayli, tushunaman.»','«Rahmat. O‘zingda nima gap?»'),c('balance','🕒 «Ikkalamizga qulay vaqt topamiz.»','«Yaxshi fikr, kelishib olamiz.»'),c('space','🌿 «Hozircha o‘zimning ishlarim bilan bo‘laman.»','«Mayli, o‘zingga vaqt ajrat.»')]},
+{id:'conflict',chapter:5,chapterName:'Rost gap',title:'Fikrlar to‘g‘ri kelmasa?',mood:'garden',
+description:'Bir mavzuda ikkoving har xil fikrdasanlar. Janjal yo‘q, lekin kim haq ekanini ham bilmayapsanlar.',
+dialogue:'«Mayli, men boshqacha o‘ylayman. Lekin sening fikringni ham eshitaman.»',
+question:'Nima qilasan?',
+choices:[c('talk','🗣️ «Hozir gaplashib olaylik.»','«Bo‘ldi, bemalol ayt.»'),c('pause','😅 «Sal keyin gaplashamiz.»','«Xo‘p, sal tinchib olamiz.»'),c('write','📲 «Yaxshisi yozib tushuntiraman.»','«O‘qib chiqaman, mayli.»'),c('accept','🤝 «Har xil fikr bo‘lishi normal.»','«Ha, doim bir xil o‘ylash shartmas.»')]},
+{id:'boundaries',chapter:5,chapterName:'Rost gap',title:'Qanaqa davom ettiramiz?',mood:'garden',
+description:'U senga yana gaplashib turishni taklif qilmoqchi. Lekin qayergacha borishi haqida hech kim aniq bilmaydi.',
+dialogue:'«Menga sen bilan gaplashish yoqdi. Lekin qanday davom etishi sening ham xohishingga bog‘liq.»',
+question:'Qaysi javob senga yaqin?',
+choices:[c('slow','🌿 «Shoshmasdan tanishamiz.»','«Mayli, shoshilmaymiz.»'),c('friend','🤝 «Avval do‘st bo‘lib gaplashamiz.»','«Bo‘ldi, bemalol.»'),c('open','💬 «Gaplashamiz, keyin ko‘ramiz.»','«Kelishdik.»'),c('unknown','🤷 «Hali bilmayman.»','«Bu ham javob. Majburlash yo‘q.»')]},
+{id:'gift',chapter:6,chapterName:'Bitta sir bor',title:'Senga bitta narsa bor 📩',mood:'letter',
+description:'Ketishdan oldin u telefonini olib, nimadir yozdi. Keyin ekranni senga uzatdi.',
+dialogue:'«Senga bitta qisqa yozuv qoldirdim. Xohlasang o‘qi. Katta gap emas, xavotir olma 😅»',
+question:'Nima deysan?',
+choices:[c('now','👀 «Qani, hozir o‘qiyman.»','«Mayli, bemalol.»'),c('later','😌 «Uyga borgach o‘qiyman.»','«Bo‘ladi, qachon xohlasang.»'),c('ask','😂 «Sirli qilib yubording-ku, nima yozding?»','«O‘qi, keyin kulma faqat 😂»'),c('decline','🌿 «Hozir o‘qimasam ham bo‘ladimi?»','«Albatta. O‘zing bilasan.»')]},
+{id:'letter',chapter:6,chapterName:'Bitta sir bor',title:'Yozgan gapi oddiy ekan',mood:'letter',
+description:'Qisqagina yozuv chiqdi. Na she’r, na katta va’da. Shunchaki oddiy, rost gap.',
+dialogue:'«Qara, sen bilan gaplashganim zo‘r bo‘ldi. Hamma narsani tezlashtirmoqchimasman. Yana gaplashsak, xursand bo‘laman. Yo‘q desang ham xafa bo‘lmayman.»',
+question:'Bunga nima deb javob berarding?',
+choices:[c('peace','🙂 «Yaxshi, tushunarli.»','«Bo‘ldi, ortiqcha drama yo‘q.»'),c('smile','😊 «Menga ham bugun yoqdi.»','«Rostdanmi? Zo‘r-ku!»'),c('intrigue','👀 «Sening kimligingni hali bilmayman-ku.»','«Ha, eng qiziq joyiga keldik...»'),c('neutral','🤷 «Ko‘ramiz, hozir hech narsa demayman.»','«Mayli, bemalol o‘ylab ko‘r.»')]},
+{id:'final',chapter:7,chapterName:'Oxiri nima bo‘ladi?',title:'Xo‘sh, keyinchi? 😄',mood:'sky',
+description:'O‘yin shu yerda tugayapti. Endi haqiqiy hayotda nima bo‘lishini oldindan aytish shartmas.',
+dialogue:'«Yana gaplashib turamizmi? Yo‘q desang ham normal, gap yo‘q.»',
+question:'Sening javobing?',
+choices:[c('continue','❤️ «Ha, yana gaplashamiz.»','«Kelishdik, unda ko‘rishguncha!»'),c('friends','🤝 «Do‘st bo‘lib gaplashsak bo‘ladi.»','«Bo‘ladi, do‘stlik ham zo‘r.»'),c('slow','😌 «Hali shoshmaylik.»','«Xo‘p. Hech qayoqqa yugurmaymiz.»'),c('unknown','👀 «Hozir aniq javobim yo‘q.»','«Tushunarli, bosim yo‘q.»')]}
 ];
-
-export function getScene(index:number, answers:AnswerMap):Scene {
+export function getScene(index:number,answers:AnswerMap):Scene {
  const s=scenes[index];
+ if(!s) return scenes[0];
+ if(s.id==='message'&&answers.invitation==='later')return {...s,description:'Keyinroq yana kirib, o‘yinni davom ettirding. U sening vaqtingni hurmat qildi.',dialogue:'«Hozir bo‘shadingmi? Senga bitta savol berish navbatini beraman 😄»'};
  if(s.id==='hello'){
-  const place=answers.place;
-  if(place==='garden')return {...s,mood:'garden',description:'Shamol va yaproqlar orasida suhbat boshlanadi. Siz bog‘ni tanlagansiz.'};
-  if(place==='walk')return {...s,mood:'night',description:'Shahar chiroqlari ostida sekin yurasiz. Siz sayrni tanlagansiz.'};
-  if(place==='music')return {...s,mood:'sky',description:'Jonli pianino yangraydi. Siz musiqali oqshomni tanlagansiz.'};
+  if(answers.place==='garden')return {...s,mood:'garden',description:'Parkda ochiq havoda ko‘rishdinglar. Dastlab sal tortindinglar, keyin gap ochildi.'};
+  if(answers.place==='walk')return {...s,mood:'night',description:'Shaharda aylanib yuribsizlar. Qadam tashlagan sari gaplar ham ko‘payyapti.'};
+  if(answers.place==='music')return {...s,mood:'sky',description:'Musiqa bor joyni tanlaganding. O‘tiribsanlar, yoningizda yaxshi qo‘shiq yangrayapti.'};
  }
- if(s.id==='letter'&&answers.gift==='decline')return {...s,description:'Siz xatni olmaslikni tanladingiz. Sirli inson bu qarorni hurmat qiladi va shunchaki qisqa fikr aytadi.'};
+ if(s.id==='smalltalk'&&answers.icebreaker==='funny')return {...s,description:'Memlardan gap ochilib, ikkoving rosa kuldinglar. Ofitsiant kelib yana nimadir olasizlarmi deb so‘radi.'};
+ if(s.id==='oops'&&answers.rain==='wait')return {...s,description:'Yomg‘irni ichkarida kutib turibsizlar. Yigit tashqariga bir qadam chiqishi bilan krossovkasini ko‘lmakka botirib oldi 😂'};
+ if(s.id==='oops'&&answers.rain==='taxi')return {...s,description:'Taksi kelguncha kutib turibsizlar. Yigit mashina tomonga yuguraman deb ko‘lmakka bosib oldi 😂'};
+ if(s.id==='memory'&&answers.oops==='help')return {...s,dialogue:'«Vaziyatda kulmay, holatimni so‘rading. Rahmat. Bugundan bitta narsa esda qolsa, nima bo‘lardi?»'};
+ if(s.id==='letter'&&answers.gift==='decline')return {...s,description:'Sen yozuvni hozir o‘qishni xohlamading. U buni qabul qildi va yozuv o‘rniga bir og‘iz oddiy gap aytdi.',dialogue:'«Mayli, o‘qimasang ham bo‘ladi. Gapim shuki: sen bilan gaplashish zo‘r. Yana suhbatlashsak xursand bo‘laman, xohlamasang ham tushunaman.»'};
  return s;
 }
-export function ending(answers:AnswerMap) {
+export function ending(answers:AnswerMap){
  const f=answers.final;
- if(f==='friends')return {title:'Qadrli tanishuv',text:'Har bir tanishuv muhabbatga aylanishi shart emas. Do‘stlik ham qadrli.'};
- if(f==='slow')return {title:'Shoshilmasdan',text:'Eng yaxshi hikoyalar ba’zan shoshilmasdan yoziladi.'};
- if(f==='unknown')return {title:'Noma’lum sahifa',text:'Davomini vaqt ko‘rsatadi. Qanday bo‘lsa ham hurmat o‘zgarmaydi.'};
+ if(f==='friends')return {title:'Do‘stlik ham zo‘r 🤝',text:'Senga do‘stona gaplashish qulayroq ekan. Shu ham yaxshi. Hech kim hech kimdan ortiqcha narsa kutmaydi.'};
+ if(f==='slow')return {title:'Shoshmaymiz 😌',text:'Sekin-sekin tanishgan ham yaxshi. Hozir hech narsaga nom qo‘yish shartmas.'};
+ if(f==='unknown')return {title:'Hali bilmadik 👀',text:'Hozir aniq javob yo‘q. Bu ham normal. Keyin nima bo‘lishini vaqt ko‘rsatadi.'};
  const playful=['funny','joke','deal','run','laugh','both'].filter(id=>Object.values(answers).includes(id)).length;
- return playful>=2?{title:'Sarguzasht endi boshlanadi',text:'Kulgi bilan boshlangan hikoyalarning davomida ham ajoyib voqealar bo‘lishi mumkin.'}:{title:'Bu hali boshlanishi',text:'Ba’zan eng chiroyli hikoyalar oddiy suhbatlardan boshlanadi.'};
+ return playful>=2?{title:'Kulgi hali tugamadi 😂',text:'Ssenariyda rosa kuldik. Real hayotda ham shunaqa oson gaplashib ketsak, zo‘r bo‘lardi.'}:{title:'Yana gaplashamizmi? ❤️',text:'O‘yin tugadi, lekin suhbat tugashi shartmas. Qolganini shoshmay ko‘ramiz.'};
 }
